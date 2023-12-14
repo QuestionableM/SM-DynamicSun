@@ -13,6 +13,7 @@ public:
 	static DirectX::XMFLOAT3& GetLightDirection();
 
 	static DirectX::XMVECTOR GetRotationQuat(float time_of_day);
+	static void UpdateLightDirection(DirectX::FXMVECTOR& dir, DirectX::FXMVECTOR& quat, float intensity);
 	static __int64 Update(void* device);
 
 	inline static float ms_fSunAngle = 0.32f;
@@ -20,4 +21,5 @@ public:
 private:
 	inline static Timer ms_deltaTimeTimer;
 	inline static float ms_fLightIntensity = 0.0f;
+	inline static float ms_fMainMenuTime = 0.5f;
 };

@@ -30,10 +30,9 @@ static_assert(sizeof(OptionsSubMenuBase) == 0x168, "OptionsSubMenuBase: Incorrec
 
 struct GraphicsOptionsMenu;
 
-template<typename T>
-struct CustomHasher
+struct VoidHasher
 {
-	inline std::size_t operator()(const T* ptr) const noexcept
+	inline std::size_t operator()(const void* ptr) const noexcept
 	{
 		return reinterpret_cast<std::size_t>(ptr);
 	}
@@ -45,7 +44,7 @@ struct GraphicsOptionsMenu : public OptionsSubMenuBase
 	using Destructor = void (*)(GraphicsOptionsMenu*, char);
 
 	inline static std::unordered_map<const GraphicsOptionsMenu*,
-		std::vector<OptionsItemBase*>, CustomHasher<void>> ms_customItems = {};
+		std::vector<OptionsItemBase*>, VoidHasher> ms_customItems = {};
 
 	/* 0x0168 */ MyGUI::Button* some_button;
 	/* 0x0170 */ std::shared_ptr<OptionsItemDropDown> shader_quality_dropdown;

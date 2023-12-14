@@ -1,9 +1,9 @@
 #include "GraphicsOptionsMenu.hpp"
 
 #include "OptionsItemSlider.hpp"
+#include "GameInstanceData.hpp"
 #include "GameSettings.hpp"
 #include "DynamicSun.hpp"
-
 
 #include "Utils/Console.hpp"
 #include "Utils/Memory.hpp"
@@ -55,7 +55,12 @@ __int64 GraphicsOptionsMenu::h_CreateWidgets(GraphicsOptionsMenu* self)
 		OptionsItemSlider* v_new_slider = new OptionsItemSlider(
 			v_new_option, "Sun Angle", "SunAngle", v_min_sun_angle, v_max_sun_angle, 20,
 			[](std::size_t value) -> void {
-				DynamicSun::ms_fSunAngle = *reinterpret_cast<float*>(&value);
+				const float v_flt_val = *reinterpret_cast<float*>(&value);
+
+				if (GameInstanceData::GetInstance())
+					DynamicSun::ms_fSunAngle = v_flt_val;
+				else
+					DynamicSun::ms_fSunAngle = std::abs(v_flt_val);
 			}
 		);
 
