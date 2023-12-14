@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicSun", "DynamicSun.vcxproj", "{BBF338F4-7320-4EEC-A99F-DEFE3F608927}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E99195B0-24EE-40F9-B673-38CCFFCDD225} = {E99195B0-24EE-40F9-B673-38CCFFCDD225}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMinHook", "libMinHook\libMinHook.vcxproj", "{E99195B0-24EE-40F9-B673-38CCFFCDD225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBF338F4-7320-4EEC-A99F-DEFE3F608927}.Debug|x64.ActiveCfg = Debug|x64
+		{BBF338F4-7320-4EEC-A99F-DEFE3F608927}.Debug|x64.Build.0 = Debug|x64
+		{BBF338F4-7320-4EEC-A99F-DEFE3F608927}.Release|x64.ActiveCfg = Release|x64
+		{BBF338F4-7320-4EEC-A99F-DEFE3F608927}.Release|x64.Build.0 = Release|x64
+		{E99195B0-24EE-40F9-B673-38CCFFCDD225}.Debug|x64.ActiveCfg = Debug|x64
+		{E99195B0-24EE-40F9-B673-38CCFFCDD225}.Debug|x64.Build.0 = Debug|x64
+		{E99195B0-24EE-40F9-B673-38CCFFCDD225}.Release|x64.ActiveCfg = Release|x64
+		{E99195B0-24EE-40F9-B673-38CCFFCDD225}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23912EFC-13D0-4251-938F-B1CECD20EF10}
+	EndGlobalSection
+EndGlobal
