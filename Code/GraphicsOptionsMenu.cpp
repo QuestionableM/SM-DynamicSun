@@ -1,79 +1,65 @@
 #include "GraphicsOptionsMenu.hpp"
 
-#include "OptionsItemSlider.hpp"
+#include <SmSdk/Gui/OptionsItemSlider.hpp>
+#include <SmSdk/GameState.hpp>
+#include <SmSdk/Util/Memory.hpp>
+
 #include "GameInstanceData.hpp"
-#include "GameSettings.hpp"
+#include "Utils/Console.hpp"
 #include "DynamicSun.hpp"
 
-#include "Utils/Console.hpp"
-#include "Utils/Memory.hpp"
+constexpr float g_minSunAngle = DirectX::XMConvertToRadians(-70.0f);
+constexpr float g_maxSunAngle = DirectX::XMConvertToRadians(70.0f);
 
-MyGUI::Widget* Options::createNewOption()
+class SunAngleSlider : public OptionsItemSlider
 {
-	using NewOptionConstructor = MyGUI::Widget* (*)(Options*);
-
-	NewOptionConstructor v_constructor = Memory::GetGlobal<NewOptionConstructor>(0x536A90);
-	return v_constructor(this);
-}
-
-void GraphicsOptionsMenu::RegisterOptionItem(OptionsItemBase* item)
-{
-	auto v_iter = ms_customItems.find(this);
-	if (v_iter == ms_customItems.end())
+public:
+	inline SunAngleSlider(MyGUI::Widget* pWidget) :
+		OptionsItemSlider(pWidget, "Sun Angle", g_minSunAngle, g_maxSunAngle, 20)
 	{
-		ms_customItems.emplace(this, std::vector<OptionsItemBase*>{ item });
-		return;
+		this->update();
+
+		m_pSlider->eventScrollChangePosition += MyGUI::newDelegate(
+			this, &SunAngleSlider::sliderChangePosition);
 	}
 
-	v_iter->second.push_back(item);
-}
+	void updateText()
+	{
+		const std::int64_t v_cur_val = std::int64_t(this->getFraction() * 100.0f);
+		m_pValueTextBox->setCaption(std::to_string(v_cur_val));
+	}
 
-void GraphicsOptionsMenu::DestroyOptionItems()
-{
-	auto v_iter = ms_customItems.find(this);
-	if (v_iter == ms_customItems.end())
-		return;
+	void sliderChangePosition(MyGUI::ScrollBar* caller, std::size_t new_val)
+	{
+		DynamicSun::ms_fSunAngle = this->getFraction();
+		this->updateText();
+	}
 
-	for (auto v_item_ptr : v_iter->second)
-		v_item_ptr->~OptionsItemBase();
+	std::size_t getSunAngleApprox() const
+	{
+		const float v_range = (DynamicSun::ms_fSunAngle + g_maxSunAngle) / (g_maxSunAngle * 2.0f);
+		const float v_range_clamped = std::clamp(v_range, 0.0f, 1.0f);
 
-	ms_customItems.erase(v_iter);
-}
+		return std::size_t(v_range_clamped * m_uSteps);
+	}
+
+	void update() override
+	{
+		m_pSlider->setScrollPosition(this->getSunAngleApprox());
+		this->updateText();
+	}
+};
 
 __int64 GraphicsOptionsMenu::h_CreateWidgets(GraphicsOptionsMenu* self)
 {
-	if (Memory::ToLocalOffset(*reinterpret_cast<void**>(self)) == 0xF65600)
+	if (Memory::ToLocalAddress(*reinterpret_cast<void**>(self)) == 0xF65600)
 	{
 		DebugOutL(__FUNCTION__, " -> Injected custom game settings");
 
-		constexpr float v_min_sun_angle = DirectX::XMConvertToRadians(-70.0f);
-		constexpr float v_max_sun_angle = DirectX::XMConvertToRadians(70.0f);
-
-		GameSettings::UpdateFloatSetting("SunAngle", DynamicSun::ms_fSunAngle);
-
-		MyGUI::Widget* v_new_option = self->options2.createNewOption();
-		OptionsItemSlider* v_new_slider = new OptionsItemSlider(
-			v_new_option, "Sun Angle", "SunAngle", v_min_sun_angle, v_max_sun_angle, 20,
-			[](std::size_t value) -> void {
-				const float v_flt_val = *reinterpret_cast<float*>(&value);
-
-				if (GameInstanceData::GetInstance())
-					DynamicSun::ms_fSunAngle = v_flt_val;
-				else
-					DynamicSun::ms_fSunAngle = std::abs(v_flt_val);
-			}
-		);
-
-		self->RegisterOptionItem(v_new_slider);
-		v_new_slider->Update();
+		auto v_sun_slider = std::make_shared<SunAngleSlider>(
+			self->m_rightStackBox.createNewOption());
+		self->m_optionItems.emplace_back(std::move(v_sun_slider));
 	}
 
 	return GraphicsOptionsMenu::o_CreateWidgets(self);
-}
-
-void GraphicsOptionsMenu::h_Destructor(GraphicsOptionsMenu* self, char flag)
-{
-	//Cleanup custom options
-	self->DestroyOptionItems();
-	o_Destructor(self, flag);
 }

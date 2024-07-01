@@ -4,15 +4,23 @@
 
 #include "Utils/Console.hpp"
 
+float DynamicSun::GetSunAngle()
+{
+	if (GameInstanceData::GetInstance())
+		return ms_fSunAngle;
+
+	return std::abs(ms_fSunAngle);
+}
+
 DirectX::XMVECTOR DynamicSun::ComputeQuatFromAngle(float angle)
 {
-	DirectX::FXMMATRIX v_rot_matrix = DirectX::XMMatrixRotationRollPitchYaw(0.0f, angle, ms_fSunAngle);
+	DirectX::FXMMATRIX v_rot_matrix = DirectX::XMMatrixRotationRollPitchYaw(0.0f, angle, DynamicSun::GetSunAngle());
 	return DirectX::XMQuaternionRotationMatrix(v_rot_matrix);
 }
 
 DirectX::XMFLOAT3& DynamicSun::GetLightDirection()
 {
-	return *Memory::Read<DirectX::XMFLOAT3>(0x11D32C0);
+	return *Memory::Read<DirectX::XMFLOAT3*>(0x11D32C0);
 }
 
 inline static float lerp_float(float a, float b, float f)

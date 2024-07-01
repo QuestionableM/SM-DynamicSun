@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils/Memory.hpp"
+#include <DirectXMath.h>
 #include "Utils/Timer.hpp"
 
 class DynamicSun
@@ -8,6 +8,8 @@ class DynamicSun
 public:
 	using PresentFunction = __int64 (*)(void*);
 	inline static PresentFunction o_PresentFunction = nullptr;
+
+	static float GetSunAngle();
 
 	static DirectX::XMVECTOR ComputeQuatFromAngle(float angle);
 	static DirectX::XMFLOAT3& GetLightDirection();

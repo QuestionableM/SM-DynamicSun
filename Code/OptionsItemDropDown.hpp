@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OptionsItemBase.hpp"
+#include <SmSdk/Gui/OptionsItemBase.hpp>
 
 #include <functional>
 #include <string>

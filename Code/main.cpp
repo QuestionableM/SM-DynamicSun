@@ -32,11 +32,6 @@ void process_attach()
 		(LPVOID)GraphicsOptionsMenu::h_CreateWidgets,
 		(LPVOID*)&GraphicsOptionsMenu::o_CreateWidgets);
 
-	MH_CreateHook((LPVOID)(v_mod_base + 0x35D5F0),
-		(LPVOID)GraphicsOptionsMenu::h_Destructor,
-		(LPVOID*)&GraphicsOptionsMenu::o_Destructor);
-
-
 	ms_mhHooksAttached = MH_EnableHook(MH_ALL_HOOKS) == MH_OK;
 }
 
