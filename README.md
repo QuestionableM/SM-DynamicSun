@@ -1,5 +1,7 @@
 # DynamicSun
-A Scrap Mechanic DLL mod which makes the sun dynamic!
+A Scrap Mechanic DLL mod which makes the sun dynamic!<br/>
+
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/QuestionableM/SM-DynamicSun/total)
 
 # How to download and enable
 
