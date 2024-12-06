@@ -7,6 +7,7 @@
 #include "GameInstanceData.hpp"
 #include "Utils/Console.hpp"
 #include "DynamicSun.hpp"
+#include "offsets.hpp"
 
 constexpr float g_minSunAngle = DirectX::XMConvertToRadians(-70.0f);
 constexpr float g_maxSunAngle = DirectX::XMConvertToRadians(70.0f);
@@ -52,7 +53,7 @@ public:
 
 __int64 GraphicsOptionsMenu::h_CreateWidgets(GraphicsOptionsMenu* self)
 {
-	if (Memory::ToLocalAddress(*reinterpret_cast<void**>(self)) == 0xF65600)
+	if (Memory::ToLocalAddress(*reinterpret_cast<void**>(self)) == DYNAMIC_SUN_GRAPHICS_OPTIONS_MENU_VFTABLE)
 	{
 		DebugOutL(__FUNCTION__, " -> Injected custom game settings");
 

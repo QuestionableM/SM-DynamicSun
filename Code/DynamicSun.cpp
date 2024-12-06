@@ -1,8 +1,10 @@
 #include "DynamicSun.hpp"
 
 #include "GameInstanceData.hpp"
+#include <SmSdk/GameState.hpp>
 
 #include "Utils/Console.hpp"
+#include "offsets.hpp"
 
 float DynamicSun::GetSunAngle()
 {
@@ -20,7 +22,7 @@ DirectX::XMVECTOR DynamicSun::ComputeQuatFromAngle(float angle)
 
 DirectX::XMFLOAT3& DynamicSun::GetLightDirection()
 {
-	return *Memory::Read<DirectX::XMFLOAT3*>(0x11D32C0);
+	return *Memory::Read<DirectX::XMFLOAT3*>(DYNAMIC_SUN_DIRECTION_OFFSET);
 }
 
 inline static float lerp_float(float a, float b, float f)

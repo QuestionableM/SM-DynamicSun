@@ -167,11 +167,11 @@
     <ClInclude Include="Code\DynamicSun.hpp" />
     <ClInclude Include="Code\GameInstanceData.hpp" />
     <ClInclude Include="Code\GraphicsOptionsMenu.hpp" />
+    <ClInclude Include="Code\offsets.hpp" />
     <ClInclude Include="Code\OptionsItemDropDown.hpp" />
     <ClInclude Include="Code\Utils\ConColors.hpp" />
     <ClInclude Include="Code\Utils\Console.hpp" />
     <ClInclude Include="Code\Utils\Timer.hpp" />
-    <ClInclude Include="Code\win_include.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

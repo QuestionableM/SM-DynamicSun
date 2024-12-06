@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SmSdk/Util/Memory.hpp>
+#include "offsets.hpp"
 
 struct GameInstanceData
 {
@@ -8,6 +9,6 @@ struct GameInstanceData
 
 	inline static GameInstanceData* GetInstance()
 	{
-		return *Memory::ReadPtr<GameInstanceData*>(0x128D790);
+		return *Memory::ReadPtr<GameInstanceData*>(DYNAMIC_SUN_GAME_INSTANCE_PTR);
 	}
 };

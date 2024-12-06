@@ -2,7 +2,7 @@
 
 #if defined(_DEBUG) || !defined(_DEBUG)
 
-#include "win_include.hpp"
+#include <SmSdk/win_include.hpp>
 #include "ConColors.hpp"
 
 #include <sstream>
