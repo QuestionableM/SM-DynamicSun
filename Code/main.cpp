@@ -16,11 +16,11 @@ static bool ms_mhHooksAttached = false;
 
 void process_attach()
 {
-	if (!SmSdk::CheckTimestamp(_SM_TIMESTAMP_070_771))
+	if (!SmSdk::CheckTimestamp(_SM_TIMESTAMP_071_772))
 	{
 		MessageBoxA(
 			NULL,
-			"Your game version is unsupposed by Dynamic Sun. The current version of the mod has been built for Scrap Mechanic 0.7.0.771",
+			"Your game version is not supported by Dynamic Sun. The current version of the mod has been built for Scrap Mechanic 0.7.1.772\n\nPress OK to continue loading without the mod.",
 			"Unsupported Version",
 			MB_ICONWARNING);
 		return;
